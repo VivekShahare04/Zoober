@@ -16,4 +16,7 @@ app.get('/', (req, res) => { res.send('Hello World') });
 const userRouter = require('./routes/user.routes.js');
 app.use('/users', userRouter);
 
+const captainRouter = require('./routes/captain.routes.js');
+app.use('/captains', captainRouter);
+
 module.exports = app;

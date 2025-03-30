@@ -1,7 +1,7 @@
 import React from 'react'
 
 const LocationSearchPanel = (props) => {
-    console.log(props);
+    //console.log(props);
     const Locations = [
         'vivek coding school',
         'pushkar coding school',

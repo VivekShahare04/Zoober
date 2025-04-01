@@ -19,4 +19,7 @@ app.use('/users', userRouter);
 const captainRouter = require('./routes/captain.routes.js');
 app.use('/captains', captainRouter);
 
+const mapRouter = require('./routes/maps.routes.js');
+app.use('/maps', mapRouter);
+
 module.exports = app;

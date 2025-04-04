@@ -18,3 +18,33 @@ module.exports.getCoordinates = async (req, res) => {
         });
     }
 };
+
+module.exports.getDistanceTime = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+        const { origin, destination } = req.query;
+        const distanceTime = await mapService.getDistanceTime(origin, destination);
+        return res.status(200).json(distanceTime);
+    } catch (error) {
+        console.error("Error getting distance and time:", error);
+        res.status(500).json({ message: "Internal Server Error", });
+    }
+}
+
+module.exports.getAutoCompleteSuggestion = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+        const { input } = req.query;
+        const suggestions = await mapService.getAutoCompleteSuggestion(input);
+        return res.status(200).json(suggestions);
+    } catch (error) {
+        console.error("Error getting suggestions:", error);
+        return res.status(500).json({ message: "Internal Server Error", });
+    }
+}

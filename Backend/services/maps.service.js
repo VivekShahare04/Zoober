@@ -32,3 +32,42 @@ module.exports.getAddressCoordinates= async(address)=>{
         };
     }
 }
+
+module.exports.getDistanceTime = async(origin, destination) => {
+    if(!origin||!destination){
+        throw new Error ('Origin and destination are required');
+    }
+        const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destination}&key=${process.env.GOOGLE_MAPS_API}`
+        
+    try{
+        const response = await axios.get(url);
+        if(response.data.status === 'OK'){
+            if(response.data.rows[0].elements[0].status === 'ZERO_RESULTS'){
+                throw new Error('No route found');
+            }
+            return response.data.rows[0].elements[0];
+        } else {
+            throw new Error('Failed to get distance and time');
+        }
+    } catch(error) {
+        //console.error('Error in getDistanceTime:', error.message);
+        console.error(error);
+        throw error;
+    }
+}
+
+module.exports.getAutoCompleteSuggestion = async(input)=>{
+    if(!input){
+        throw new Error ('Input is required');
+    }
+    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${process.env.GOOGLE_MAPS_API}`;
+    try {
+        const response = await axios.get(url);
+        if(response.data.status !== 'OK'){
+            return response.data.predictions;
+        }
+    } catch (error) {
+        console.error('Error in getAutoCompleteSuggestion:', error.message);
+        throw error;
+    }
+}

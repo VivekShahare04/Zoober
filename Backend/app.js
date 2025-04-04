@@ -22,4 +22,7 @@ app.use('/captains', captainRouter);
 const mapRouter = require('./routes/maps.routes.js');
 app.use('/maps', mapRouter);
 
+const rideRouter = require('./routes/ride.routes.js');
+app.use('/rides', rideRouter);
+
 module.exports = app;
